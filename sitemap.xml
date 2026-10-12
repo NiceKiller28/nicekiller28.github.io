@@ -6,4 +6,10 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://nicekiller28.github.io/clover/</loc>
+  </url>
+  <url>
+    <loc>https://nicekiller28.github.io/clover-plotter/</loc>
+  </url>
 </urlset>

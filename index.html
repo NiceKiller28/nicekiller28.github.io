@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clover Store — приложения семьи Clover</title>
+<meta name="description" content="Clover Store — все приложения семьи Clover в одном месте: торрент-клиент Clover с друзьями и звонками, рукописный плоттер Clover Plotter и другие. Бесплатно, без рекламы и регистрации.">
+<meta name="theme-color" content="#0D1713">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Clover Store — приложения семьи Clover">
+<meta property="og:description" content="Clover, Clover Plotter и другие бесплатные приложения — выберите и перейдите на сайт приложения.">
+<meta property="og:url" content="https://nicekiller28.github.io/">
+<meta property="og:image" content="https://nicekiller28.github.io/clover-shot.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400..800&display=swap">
+<script>
+  (function () {
+    var d = document.documentElement;
+    d.classList.add('js');
+    try {
+      var calm = localStorage.getItem('clover-site-calm') === '1';
+      if (calm || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) d.classList.add('calm');
+    } catch (e) { }
+  })();
+</script>
+<style>
+  /* ---------- Палитра семьи Clover ---------- */
+  :root{
+    --bg:#0D1713; --sidebar:#0A120F; --surface:#15221B; --surface-alt:#1C3024; --hover:#182920; --border:#22382B;
+    --text:#ECF3EC; --muted:#91A497; --faint:#5F7366; --accent:#A4ED86; --accent-deep:#72C064; --accent-dark:#182A16;
+    --seed:#69C7A6; --info:#8EC5E8; --warning:#E8C47B; --danger:#F09A94;
+    --accent-hi: color-mix(in srgb, var(--accent) 88%, white);
+    --accent-lo: color-mix(in srgb, var(--accent) 88%, black);
+    --accent-stem: color-mix(in srgb, var(--accent) 82%, black);
+    --faint-text: color-mix(in srgb, var(--faint) 45%, var(--muted));
+    --ease: cubic-bezier(.22,1,.36,1);
+    --side: 250px;
+    --radius: 16px;
+    color-scheme: dark;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth; scroll-padding-top:24px}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:"Noto Sans","Segoe UI",system-ui,-apple-system,sans-serif; font-size:15px; line-height:1.55;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    transition:opacity .22s ease, transform .22s var(--ease);
+  }
+  body.leaving{opacity:0; transform:scale(.985)}
+  a{color:inherit}
+  img{max-width:100%; height:auto; display:block}
+  html, body{overflow-x:clip}
+  .sr{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+  a:focus-visible, button:focus-visible, input:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:12px}
+  .i{width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+  .logo{display:block; overflow:visible}
+  .sway{transform-origin:0 0; animation:sway 4.2s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:rotate(-8deg) scale(1)} 25%{transform:rotate(-1deg) scale(1.03)} 50%{transform:rotate(-8deg) scale(1)} 75%{transform:rotate(-15deg) scale(.97)}}
+  .app-icon{display:block; width:44px; height:44px; flex:none}
+  /* Плитка Clover — как на его сайте. */
+  .clover-tile{display:grid; place-items:center; flex:none; border-radius:28%;
+    background:linear-gradient(160deg, var(--surface-alt), var(--bg)); border:1px solid color-mix(in srgb, var(--border) 70%, var(--accent))}
+  .clover-tile .logo{width:66%; height:auto; aspect-ratio:100 / 108}
+
+  /* ---------- Кнопки ---------- */
+  .btn{
+    position:relative; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:9px;
+    height:44px; padding:0 20px; border-radius:12px; border:1px solid var(--border);
+    background:var(--surface); color:var(--text); font:inherit; font-size:14.5px; font-weight:600; white-space:nowrap;
+    text-decoration:none; cursor:pointer; -webkit-tap-highlight-color:transparent;
+    transition:background-color .18s ease, border-color .18s ease, color .18s ease, transform .18s ease, box-shadow .25s ease;
+  }
+  .btn:hover{background:var(--hover); border-color:color-mix(in srgb, var(--border) 60%, var(--accent))}
+  .btn.primary{background:var(--accent); border-color:color-mix(in srgb, var(--accent) 88%, white); color:var(--accent-dark)}
+  .btn.primary:hover{background:color-mix(in srgb, var(--accent) 82%, white); box-shadow:0 8px 28px -8px color-mix(in srgb, var(--accent) 70%, transparent)}
+  .btn.big{height:52px; padding:0 26px; font-size:16px; border-radius:14px}
+  .ripple{position:absolute; border-radius:50%; pointer-events:none; background:currentColor; opacity:.25; transform:scale(0); animation:ripple .55s ease-out forwards}
+  @keyframes ripple{to{transform:scale(1); opacity:0}}
+
+  /* ---------- Боковая панель ---------- */
+  .sidebar{
+    position:fixed; z-index:30; top:0; bottom:0; left:0; width:var(--side);
+    display:flex; flex-direction:column; padding:22px 14px 16px; overflow-y:auto;
+    background:var(--sidebar); border-right:1px solid var(--border); transition:transform .35s var(--ease);
+  }
+  .brand{display:flex; align-items:center; gap:12px; padding:0 8px 22px; text-decoration:none}
+  .brand-text b{display:block; font-size:20px; line-height:1.1; font-weight:750; letter-spacing:-.01em}
+  .brand-text small{display:block; font-size:12.5px; color:var(--muted)}
+  .nav-label{padding:6px 12px 8px; font-size:11px; font-weight:750; letter-spacing:.06em; color:var(--faint-text)}
+  .nav{position:relative; display:flex; flex-direction:column; gap:4px; margin-bottom:18px}
+  .nav a{
+    position:relative; z-index:1; display:flex; align-items:center; gap:12px; height:42px; padding:0 12px; border-radius:11px;
+    color:var(--muted); text-decoration:none; font-size:14.5px; transition:color .2s ease, background-color .2s ease;
+  }
+  .nav a:hover{color:var(--text); background:color-mix(in srgb, var(--hover) 70%, transparent)}
+  .nav a[aria-current="true"]{color:var(--text)}
+  .nav a[aria-current="true"] .i{color:var(--accent)}
+  .nav a[aria-current="true"]:hover{background:transparent}
+  .nav .badge{margin-left:auto; min-width:26px; height:22px; padding:0 8px; border-radius:11px; display:grid; place-items:center; background:var(--surface-alt); color:var(--muted); font-size:11.5px; font-weight:700}
+  .nav-highlight{position:absolute; left:0; right:0; top:0; height:42px; border-radius:11px; background:var(--surface-alt); transition:transform .45s var(--ease); pointer-events:none}
+  .nav-highlight::before{content:""; position:absolute; left:0; top:10px; bottom:10px; width:3px; border-radius:2px; background:var(--accent)}
+  .app-links{display:flex; flex-direction:column; gap:4px}
+  .app-link{display:flex; align-items:center; gap:12px; height:46px; padding:0 10px; border-radius:11px; text-decoration:none; color:var(--muted); font-size:14px; transition:color .2s ease, background-color .2s ease}
+  .app-link:hover{color:var(--text); background:color-mix(in srgb, var(--hover) 70%, transparent)}
+  .app-link .app-icon, .app-link .clover-tile{width:30px; height:30px}
+  .app-link .go{margin-left:auto; width:15px; height:15px; opacity:0; transform:translateX(-4px); transition:opacity .2s ease, transform .2s var(--ease)}
+  .app-link:hover .go{opacity:1; transform:none}
+  .side-fill{flex:1}
+  .side-card{padding:14px 15px; margin:14px 0 12px; border-radius:14px; background:var(--surface); border:1px solid var(--border); font-size:12.5px; color:var(--muted); line-height:1.45}
+  .side-card b{display:flex; align-items:center; gap:8px; margin-bottom:6px; color:var(--text); font-size:13.5px}
+  .side-card b .i{color:var(--accent); width:16px; height:16px}
+  .toggle{display:flex; align-items:center; gap:12px; margin:10px 4px 6px; background:none; border:0; padding:0; color:var(--muted); font:inherit; font-size:13.5px; cursor:pointer}
+  .toggle .track{position:relative; width:38px; height:22px; border-radius:11px; background:var(--accent); transition:background-color .25s ease}
+  .toggle .track::after{content:""; position:absolute; top:3px; left:19px; width:16px; height:16px; border-radius:50%; background:var(--accent-dark); transition:left .25s var(--ease)}
+  .toggle[aria-pressed="false"] .track{background:var(--surface-alt)}
+  .toggle[aria-pressed="false"] .track::after{left:3px; background:var(--muted)}
+  .side-foot{margin:8px 6px 0; font-size:11.5px; color:var(--faint-text)}
+
+  .topbar{
+    display:none; position:fixed; z-index:25; top:0; left:0; right:0; height:62px; padding:0 14px; align-items:center; gap:10px;
+    background:color-mix(in srgb, var(--sidebar) 78%, transparent); border-bottom:1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    -webkit-backdrop-filter:blur(16px) saturate(140%); backdrop-filter:blur(16px) saturate(140%);
+  }
+  .topbar .brand{padding:0; margin-right:auto}
+  .topbar .app-icon{width:38px; height:38px}
+  .topbar .brand-text b{font-size:18px}
+  .menu-btn{width:40px; height:40px; padding:0}
+  .backdrop{display:none; position:fixed; inset:0; z-index:28; background:rgba(0,0,0,.55); opacity:0; transition:opacity .3s ease}
+
+  .main{margin-left:var(--side); min-width:0}
+
+  /* ---------- Главный экран ---------- */
+  .hero{position:relative; isolation:isolate; overflow:hidden; border-bottom:1px solid color-mix(in srgb, var(--border) 60%, transparent)}
+  .hero::before{content:""; position:absolute; inset:0; z-index:-2;
+    background:radial-gradient(55% 70% at 78% 40%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%),
+               radial-gradient(40% 50% at 5% 100%, color-mix(in srgb, var(--seed) 9%, transparent), transparent 70%)}
+  .hero::after{content:""; position:absolute; inset:0; z-index:-1; opacity:.5;
+    background-image:radial-gradient(color-mix(in srgb, var(--border) 85%, var(--accent)) 1px, transparent 1.2px); background-size:26px 26px;
+    -webkit-mask-image:radial-gradient(75% 80% at 75% 45%, #000 25%, transparent 80%); mask-image:radial-gradient(75% 80% at 75% 45%, #000 25%, transparent 80%)}
+  .hero-inner{max-width:1240px; margin:0 auto; padding:92px clamp(20px, 5vw, 64px) 84px; display:grid; grid-template-columns:minmax(0, 1.15fr) minmax(0, .85fr); gap:40px; align-items:center}
+  .pill{display:inline-flex; align-items:center; gap:10px; height:34px; padding:0 14px 0 5px; margin-bottom:22px; border-radius:17px;
+    background:color-mix(in srgb, var(--surface) 70%, transparent); border:1px solid var(--border); font-size:13.5px; white-space:nowrap; max-width:100%; overflow:hidden}
+  .pill > span:last-child{overflow:hidden; text-overflow:ellipsis}
+  .hero-copy{min-width:0}
+  .chip{display:inline-flex; align-items:center; gap:5px; height:24px; padding:0 10px; border-radius:12px; background:var(--accent); color:var(--accent-dark); font-weight:750; font-size:12px}
+  .chip .i{width:13px; height:13px; stroke-width:2.2}
+  .hero h1{margin:0; font-size:clamp(48px, 6.4vw, 92px); line-height:1; font-weight:800; letter-spacing:-.01em}
+  .hero h1 .soft{color:var(--accent)}
+  .caption{margin:14px 0 0; font-size:13px; letter-spacing:.5em; color:var(--muted); text-transform:lowercase}
+  .tagline{max-width:560px; margin:22px 0 0; font-size:clamp(16px, 1.35vw, 18.5px); line-height:1.55; color:color-mix(in srgb, var(--text) 82%, var(--muted))}
+  .search{position:relative; margin-top:30px; max-width:520px}
+  .search .i{position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none}
+  .search input{width:100%; height:52px; padding:0 18px 0 46px; border-radius:14px; border:1px solid var(--border); background:color-mix(in srgb, var(--surface) 85%, transparent);
+    color:var(--text); font:inherit; font-size:15.5px; transition:border-color .2s ease, background-color .2s ease}
+  .search input::placeholder{color:var(--faint-text)}
+  .search input:focus{outline:none; border-color:color-mix(in srgb, var(--border) 30%, var(--accent)); background:var(--surface)}
+
+  /* Парящие иконки приложений. */
+  .float{position:relative; height:340px}
+  .float > *{position:absolute; border-radius:28%; box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
+  .float .f1{width:180px; height:180px; left:12%; top:16%; z-index:2}
+  .float .f2{width:150px; height:150px; right:4%; top:44%; z-index:3}
+  .float .f3{width:96px; height:96px; right:22%; top:0; opacity:.5; border:1.5px dashed color-mix(in srgb, var(--border) 50%, var(--accent)); background:color-mix(in srgb, var(--surface) 60%, transparent); box-shadow:none; display:grid; place-items:center; color:var(--muted); font-size:30px; font-weight:300}
+  .float .f4{width:70px; height:70px; left:2%; bottom:2%; opacity:.35; border:1.5px dashed color-mix(in srgb, var(--border) 50%, var(--accent)); box-shadow:none}
+  .js:not(.calm) .float .f1{animation:bob1 6s ease-in-out infinite}
+  .js:not(.calm) .float .f2{animation:bob2 7s ease-in-out infinite}
+  .js:not(.calm) .float .f3{animation:bob1 8s ease-in-out infinite reverse}
+  @keyframes bob1{0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-12px) rotate(-1deg)}}
+  @keyframes bob2{0%,100%{transform:translateY(0) rotate(5deg)} 50%{transform:translateY(10px) rotate(2deg)}}
+
+  /* ---------- Разделы ---------- */
+  .section{padding:72px clamp(20px, 5vw, 64px); max-width:1240px; margin:0 auto}
+  .section-head{display:flex; flex-wrap:wrap; align-items:flex-end; gap:16px 24px; margin-bottom:26px}
+  .section-head h2{margin:0; font-size:clamp(26px, 3vw, 34px); line-height:1.15; font-weight:780; letter-spacing:-.015em}
+  .section-head p{margin:8px 0 0; max-width:620px; color:var(--muted); font-size:15.5px}
+  .section-head .grow{flex:1; min-width:260px}
+  .panel{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius)}
+
+  /* Выбор недели. */
+  .featured{display:grid; grid-template-columns:minmax(0, .95fr) minmax(0, 1.05fr); gap:0; overflow:hidden; text-decoration:none; position:relative;
+    background:linear-gradient(120deg, color-mix(in srgb, var(--accent) 12%, var(--surface)), var(--surface) 55%);
+    transition:border-color .3s ease, transform .35s var(--ease), box-shadow .35s ease}
+  .featured:hover{border-color:color-mix(in srgb, var(--border) 35%, var(--accent)); transform:translateY(-3px); box-shadow:0 30px 70px -30px rgba(0,0,0,.7)}
+  .featured-copy{padding:34px 34px 30px; display:flex; flex-direction:column; align-items:flex-start}
+  .label{display:inline-flex; align-items:center; gap:6px; height:26px; padding:0 11px; border-radius:13px; margin-bottom:20px; font-size:12px; font-weight:750; letter-spacing:.04em; color:var(--accent-dark); background:var(--accent)}
+  .label .i{width:14px; height:14px; stroke-width:2.2}
+  .featured-title{display:flex; align-items:center; gap:16px}
+  .featured-title .clover-tile{width:64px; height:64px}
+  .featured-title b{display:block; font-size:30px; line-height:1.1; font-weight:800}
+  .featured-title small{display:block; color:var(--muted); font-size:14px}
+  .featured-copy p{margin:18px 0 22px; color:color-mix(in srgb, var(--text) 82%, var(--muted)); font-size:15.5px; max-width:460px}
+  .featured-copy .btn{margin-top:auto}
+  .featured-shot{position:relative; padding:28px 0 0 10px; display:flex; align-items:flex-end}
+  .featured-shot img{border-radius:12px 0 0 0; border:1px solid var(--border); border-right:0; border-bottom:0; box-shadow:0 30px 60px -20px rgba(0,0,0,.7); transition:transform .5s var(--ease)}
+  .featured:hover .featured-shot img{transform:translate(-6px, -6px)}
+
+  /* Фильтры. */
+  .filters{display:flex; flex-wrap:wrap; gap:8px}
+  .filter{display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 14px; border-radius:19px; border:1px solid var(--border); background:var(--surface);
+    color:var(--muted); font:inherit; font-size:14px; cursor:pointer; transition:background-color .2s ease, border-color .2s ease, color .2s ease}
+  .filter .i{width:16px; height:16px}
+  .filter:hover{color:var(--text); background:var(--hover)}
+  .filter[aria-pressed="true"]{background:var(--accent); border-color:color-mix(in srgb, var(--accent) 88%, white); color:var(--accent-dark); font-weight:650}
+
+  /* Карточки приложений. */
+  .apps{display:grid; grid-template-columns:repeat(auto-fill, minmax(330px, 1fr)); gap:16px}
+  .app{position:relative; display:flex; flex-direction:column; overflow:hidden; text-decoration:none;
+    transition:border-color .3s ease, transform .35s var(--ease), box-shadow .35s ease, opacity .3s ease}
+  .app:hover{border-color:color-mix(in srgb, var(--border) 35%, var(--accent)); transform:translateY(-4px); box-shadow:0 30px 60px -30px rgba(0,0,0,.75)}
+  .app[hidden]{display:none}
+  .app-shot{position:relative; aspect-ratio:16 / 9; overflow:hidden; background:var(--sidebar); border-bottom:1px solid var(--border)}
+  .app-shot img{width:100%; height:100%; object-fit:cover; object-position:top left; transition:transform .6s var(--ease)}
+  .app:hover .app-shot img{transform:scale(1.04)}
+  .app-shot::after{content:""; position:absolute; inset:auto 0 0 0; height:40%; background:linear-gradient(transparent, color-mix(in srgb, var(--surface) 85%, transparent))}
+  .app-body{padding:18px 20px 20px; display:flex; flex-direction:column; flex:1}
+  .app-head{display:flex; align-items:center; gap:14px; margin-top:-46px; position:relative; z-index:1}
+  .app-head .app-icon, .app-head .clover-tile{width:64px; height:64px; box-shadow:0 14px 30px -10px rgba(0,0,0,.6)}
+  .app-head .clover-tile{border-radius:18px}
+  .app-name{padding-top:26px}
+  .app-name b{display:block; font-size:19px; line-height:1.2; font-weight:760}
+  .app-name small{display:block; color:var(--muted); font-size:13px}
+  .app-body p{margin:14px 0 14px; color:var(--muted); font-size:14px}
+  .tags{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px}
+  .tag{display:inline-flex; align-items:center; gap:6px; height:26px; padding:0 10px; border-radius:13px; background:var(--surface-alt); color:var(--muted); font-size:12.5px}
+  .tag .i{width:13px; height:13px; color:var(--accent)}
+  .app-foot{margin-top:auto; display:flex; align-items:center; gap:12px; padding-top:14px; border-top:1px solid color-mix(in srgb, var(--border) 70%, transparent)}
+  .app-meta{font-size:12.5px; color:var(--faint-text); line-height:1.4}
+  .app-meta b{display:block; color:var(--muted); font-weight:650; font-size:13px}
+  .app-foot .btn{margin-left:auto; height:40px; padding:0 16px; font-size:14px}
+  .app-foot .btn .i{transition:transform .25s var(--ease)}
+  .app:hover .app-foot .btn{background:var(--accent); border-color:color-mix(in srgb, var(--accent) 88%, white); color:var(--accent-dark)}
+  .app:hover .app-foot .btn .i{transform:translateX(3px)}
+  .soon-card{display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:10px; min-height:300px; padding:30px;
+    border:1.5px dashed color-mix(in srgb, var(--border) 60%, var(--accent)); border-radius:var(--radius); background:color-mix(in srgb, var(--surface) 45%, transparent); color:var(--muted)}
+  .soon-card[hidden]{display:none}
+  .soon-card .plus{width:64px; height:64px; border-radius:18px; display:grid; place-items:center; background:var(--surface-alt); color:var(--accent); font-size:34px; font-weight:300}
+  .soon-card b{color:var(--text); font-size:17px}
+  .soon-card span{font-size:14px; max-width:280px}
+  .empty{display:none; padding:40px 20px; text-align:center; color:var(--muted)}
+  .empty.show{display:block}
+
+  /* О магазине. */
+  .about{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px}
+  .about .panel{padding:22px}
+  .about .tile{width:42px; height:42px; border-radius:12px; display:grid; place-items:center; margin-bottom:14px; color:var(--accent); background:color-mix(in srgb, var(--accent) 16%, transparent)}
+  .about .tile .i{width:21px; height:21px}
+  .about h3{margin:0 0 6px; font-size:16.5px; font-weight:720}
+  .about p{margin:0; color:var(--muted); font-size:14px}
+
+  footer{border-top:1px solid var(--border); padding:30px clamp(20px, 5vw, 64px) 40px; color:var(--faint-text); font-size:13px}
+  footer .row{max-width:1240px; margin:0 auto; display:flex; flex-wrap:wrap; gap:14px 28px; align-items:center}
+  footer .brand{padding:0}
+  footer .app-icon{width:34px; height:34px}
+  footer .brand-text b{font-size:16px}
+  footer a{color:var(--muted)}
+  footer a:hover{color:var(--text)}
+
+  .js .hero-copy > *{opacity:0; animation:rise .8s var(--ease) both}
+  .js .hero-copy > :nth-child(2){animation-delay:.1s}
+  .js .hero-copy > :nth-child(3){animation-delay:.2s}
+  .js .hero-copy > :nth-child(4){animation-delay:.3s}
+  .js .hero-copy > :nth-child(5){animation-delay:.4s}
+  .js .float{animation:rise 1s var(--ease) .25s both}
+  @keyframes rise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+  .js .reveal{opacity:0; transform:translateY(22px); transition:opacity .8s var(--ease), transform .8s var(--ease)}
+  .js .reveal.in{opacity:1; transform:none}
+  .js .reveal.d1{transition-delay:.08s} .js .reveal.d2{transition-delay:.16s}
+  .calm *, .calm *::before, .calm *::after{animation:none!important; transition:none!important}
+  .calm.js .reveal, .calm.js .hero-copy > *, .calm.js .float{opacity:1; transform:none}
+
+  @media (max-width:1180px){ .hero-inner{grid-template-columns:minmax(0, 1fr)} .float{height:240px; max-width:520px} .float .f1{width:140px; height:140px} .float .f2{width:118px; height:118px} }
+  @media (max-width:1100px){ .featured{grid-template-columns:1fr} .featured-shot{padding:0 0 0 24px} .about{grid-template-columns:1fr} }
+  @media (max-width:1000px){
+    .sidebar{transform:translateX(-100%); width:min(300px, 86vw)}
+    .nav-open .sidebar{transform:none; box-shadow:30px 0 60px rgba(0,0,0,.45)}
+    .nav-open .backdrop{display:block; opacity:1}
+    .topbar{display:flex}
+    .main{margin-left:0}
+    .hero-inner{padding-top:110px}
+    html{scroll-padding-top:74px}
+  }
+  @media (max-width:560px){
+    .apps{grid-template-columns:1fr}
+    .featured-copy{padding:26px 22px}
+    .caption{font-size:12px; letter-spacing:.38em}
+    .float{display:none}
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="clover-grad" gradientUnits="userSpaceOnUse" x1="-34.15" y1="-59.15" x2="34.15" y2="59.15">
+      <stop offset="0" style="stop-color:var(--accent-hi)"/>
+      <stop offset="1" style="stop-color:var(--accent-lo)"/>
+    </linearGradient>
+    <g id="clover-leaf">
+      <circle cx="-8.99" cy="-27" r="14.5"/><circle cx="8.99" cy="-27" r="14.5"/><path d="M0-2-22.475-21.49H22.475Z"/>
+    </g>
+    <!-- Логотип Clover, как на его сайте (Theme.DrawClover) -->
+    <symbol id="clover" viewBox="-50 -52 100 108">
+      <g class="sway">
+        <path d="M0 0C2 20 6 36 17 48" fill="none" stroke-width="7.5" stroke-linecap="round" style="stroke:var(--accent-stem)"/>
+        <g fill="url(#clover-grad)">
+          <use href="#clover-leaf" transform="rotate(45)"/><use href="#clover-leaf" transform="rotate(135)"/>
+          <use href="#clover-leaf" transform="rotate(225)"/><use href="#clover-leaf" transform="rotate(315)"/>
+        </g>
+        <circle r="4.5" style="fill:var(--bg)"/>
+      </g>
+    </symbol>
+<symbol id="plotter-icon" viewBox="0 0 256 256">
+<defs>
+<linearGradient id="pi-tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#223A2B"/><stop offset="1" stop-color="#0C1611"/></linearGradient>
+<linearGradient id="pi-leaf" gradientUnits="userSpaceOnUse" x1="-40" y1="-70" x2="40" y2="70"><stop offset="0" stop-color="#B6F19D"/><stop offset="1" stop-color="#93D578"/></linearGradient>
+<linearGradient id="pi-nib" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3FBEE"/><stop offset="1" stop-color="#B2EF98"/></linearGradient>
+</defs>
+<rect x="10" y="10" width="236" height="236" rx="58" fill="url(#pi-tile)" stroke="#A4ED86" stroke-opacity=".37" stroke-width="3"/>
+<path d="M54 214C74 198 88 228 108 212C128 196 149.29 224.86 177.29 211.86" fill="none" stroke="#A4ED86" stroke-opacity=".6" stroke-width="5.5" stroke-linecap="round"/>
+<path d="M120 100C123 130 129 154 145.5 172" fill="none" stroke="#80B868" stroke-width="11.25" stroke-linecap="round"/>
+<path d="M134.44 182.14L156.56 161.86C168.94 174.26 175.23 192.23 179.29 208.86C163.07 203.38 145.72 195.54 134.44 182.14Z" fill="url(#pi-nib)"/>
+<path d="M156.62 160.45L133.03 182.07" stroke="#5A8249" stroke-width="8" stroke-linecap="round"/>
+<path d="M159.69 187.48L177.26 206.65" stroke="#0F1B15" stroke-width="3" stroke-linecap="round"/>
+<circle cx="159.01" cy="186.74" r="4.2" fill="#0F1B15"/>
+<g transform="translate(120 100) rotate(0)"><g fill="url(#pi-leaf)"><g transform="rotate(45)"><circle cx="-13.48" cy="-40.5" r="21.75"/><circle cx="13.48" cy="-40.5" r="21.75"/><path d="M0 -3L-33.71 -32.23H33.71Z"/></g><g transform="rotate(135)"><circle cx="-13.48" cy="-40.5" r="21.75"/><circle cx="13.48" cy="-40.5" r="21.75"/><path d="M0 -3L-33.71 -32.23H33.71Z"/></g><g transform="rotate(225)"><circle cx="-13.48" cy="-40.5" r="21.75"/><circle cx="13.48" cy="-40.5" r="21.75"/><path d="M0 -3L-33.71 -32.23H33.71Z"/></g><g transform="rotate(315)"><circle cx="-13.48" cy="-40.5" r="21.75"/><circle cx="13.48" cy="-40.5" r="21.75"/><path d="M0 -3L-33.71 -32.23H33.71Z"/></g></g><circle r="6" fill="#0F1B15"/></g>
+</symbol>
+<symbol id="store-icon" viewBox="0 0 256 256">
+<defs>
+<linearGradient id="si-tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#223A2B"/><stop offset="1" stop-color="#0C1611"/></linearGradient>
+<linearGradient id="si-leaf" gradientUnits="userSpaceOnUse" x1="-30" y1="-50" x2="30" y2="50"><stop offset="0" stop-color="#C2F5AC"/><stop offset="1" stop-color="#93D578"/></linearGradient>
+</defs>
+<rect x="10" y="10" width="236" height="236" rx="58" fill="url(#si-tile)" stroke="#A4ED86" stroke-opacity=".37" stroke-width="3"/>
+<rect x="138" y="54" width="64" height="64" rx="18" fill="#A4ED86"/>
+<rect x="54" y="138" width="64" height="64" rx="18" fill="#A4ED86" fill-opacity=".55"/>
+<rect x="138" y="138" width="64" height="64" rx="18" fill="#A4ED86" fill-opacity=".3"/>
+<rect x="54" y="54" width="64" height="64" rx="18" fill="#1C3024" stroke="#A4ED86" stroke-opacity=".45" stroke-width="2.5"/>
+<g transform="translate(86 86) rotate(-8)"><g fill="url(#si-leaf)"><g transform="rotate(45)"><circle cx="-6.29" cy="-18.9" r="10.15"/><circle cx="6.29" cy="-18.9" r="10.15"/><path d="M0 -1.4L-15.73 -15.04H15.73Z"/></g><g transform="rotate(135)"><circle cx="-6.29" cy="-18.9" r="10.15"/><circle cx="6.29" cy="-18.9" r="10.15"/><path d="M0 -1.4L-15.73 -15.04H15.73Z"/></g><g transform="rotate(225)"><circle cx="-6.29" cy="-18.9" r="10.15"/><circle cx="6.29" cy="-18.9" r="10.15"/><path d="M0 -1.4L-15.73 -15.04H15.73Z"/></g><g transform="rotate(315)"><circle cx="-6.29" cy="-18.9" r="10.15"/><circle cx="6.29" cy="-18.9" r="10.15"/><path d="M0 -1.4L-15.73 -15.04H15.73Z"/></g></g><circle r="2.8" fill="#0F1B15"/></g>
+</symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.8"/><rect x="13" y="4" width="7" height="7" rx="1.8"/><rect x="4" y="13" width="7" height="7" rx="1.8"/><rect x="13" y="13" width="7" height="7" rx="1.8"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.8" r="1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-windows" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 4v16M4 12h16"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
+    <symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.5 12.6c0-2.3 1.9-3.4 2-3.5a4.3 4.3 0 0 0-3.4-1.8c-1.4-.2-2.8.8-3.5.8s-1.8-.8-3-.8a4.5 4.5 0 0 0-3.8 2.3c-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-1.1 2.8-2.3a9.4 9.4 0 0 0 1.2-2.6 4 4 0 0 1-2.4-3.7zM14.2 5.6A4 4 0 0 0 15.1 2.7a4.1 4.1 0 0 0-2.7 1.4 3.8 3.8 0 0 0-1 2.8 3.4 3.4 0 0 0 2.8-1.3z"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8c-1.5-3-5-3.5-5-1.2C7 8 9 8 12 8zm0 0c1.5-3 5-3.5 5-1.2C17 8 15 8 12 8z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.6L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.6L20 16M20 20v-4h-4"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.9-.6-1.3-.6-2.1 0-.9.7-1.6 1.6-1.6H17a4 4 0 0 0 4-4C21 6.8 17 3 12 3z"/><circle cx="7.5" cy="11.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="10" cy="7.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="7.8" r="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M5 8h14M9 4v4M12 11v3M10 14h4l-2 3z"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.6"/><path d="M16.3 14.1A5 5 0 0 1 21.5 19"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="Clover Store — наверх">
+    <svg class="app-icon" aria-hidden="true"><use href="#store-icon"/></svg>
+    <span class="brand-text"><b>Clover Store</b></span>
+  </a>
+  <button class="btn menu-btn" id="menu-btn" type="button" aria-label="Меню" aria-expanded="false" aria-controls="sidebar"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+</header>
+<div class="backdrop" id="backdrop"></div>
+
+<aside class="sidebar" id="sidebar" aria-label="Разделы магазина">
+  <a class="brand" href="#top" aria-label="Clover Store — наверх">
+    <svg class="app-icon" aria-hidden="true"><use href="#store-icon"/></svg>
+    <span class="brand-text"><b>Clover Store</b><small>приложения семьи Clover</small></span>
+  </a>
+  <div class="nav-label">МАГАЗИН</div>
+  <nav class="nav" id="nav">
+    <span class="nav-highlight" aria-hidden="true"></span>
+    <a href="#top" data-section="top"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Главная</a>
+    <a href="#apps" data-section="apps"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg>Приложения<span class="badge" id="app-count">2</span></a>
+    <a href="#about" data-section="about"><svg class="i" aria-hidden="true"><use href="#i-info"/></svg>О магазине</a>
+  </nav>
+  <div class="nav-label">ПЕРЕЙТИ</div>
+  <div class="app-links">
+    <a class="app-link" href="/clover/" data-go><span class="clover-tile"><svg class="logo" aria-hidden="true"><use href="#clover"/></svg></span>Clover<svg class="i go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <a class="app-link" href="/clover-plotter/" data-go><svg class="app-icon" aria-hidden="true"><use href="#plotter-icon"/></svg>Clover Plotter<svg class="i go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </div>
+  <div class="side-fill"></div>
+  <div class="side-card">
+    <b><svg class="i" aria-hidden="true"><use href="#i-gift"/></svg>Всё бесплатно</b>
+    Ни рекламы, ни регистрации, ни подписок — в каждом приложении семьи.
+  </div>
+  <button class="toggle" id="calm-toggle" type="button" aria-pressed="true"><span class="track" aria-hidden="true"></span>Плавные анимации</button>
+  <div class="side-foot">Clover Store · NiceKiller28</div>
+</aside>
+
+<main class="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <span class="pill"><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-sparkle"/></svg>Новое</span><span>Clover Plotter — пишет ручкой на 3D-принтере</span></span>
+        <h1 id="hero-title">Clover <span class="soft">Store</span></h1>
+        <p class="caption">приложения семьи clover</p>
+        <p class="tagline">Бесплатные приложения в одном стиле и от одного автора. Выберите приложение — и перейдите на его сайт, где его можно скачать.</p>
+        <label class="search">
+          <span class="sr">Поиск приложения</span>
+          <svg class="i" aria-hidden="true"><use href="#i-search"/></svg>
+          <input id="search" type="search" placeholder="Найти приложение: торренты, плоттер, звонки…" autocomplete="off">
+        </label>
+      </div>
+      <div class="float" aria-hidden="true">
+        <span class="clover-tile f1"><svg class="logo"><use href="#clover"/></svg></span>
+        <svg class="f2"><use href="#plotter-icon"/></svg>
+        <span class="f3">+</span>
+        <span class="f4"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="apps">
+    <a class="panel featured reveal" href="/clover/" data-go aria-label="Clover — открыть сайт приложения">
+      <div class="featured-copy">
+        <span class="label"><svg class="i" aria-hidden="true"><use href="#i-star"/></svg>ВЫБОР НЕДЕЛИ</span>
+        <span class="featured-title">
+          <span class="clover-tile"><svg class="logo" aria-hidden="true"><use href="#clover"/></svg></span>
+          <span><b>Clover</b><small>торрент-клиент с друзьями</small></span>
+        </span>
+        <p>Качайте торренты, переписывайтесь, созванивайтесь и стримьте — в одном окне. Серверы с голосовыми каналами, как у больших мессенджеров, и приложения для телефона.</p>
+        <span class="btn primary big">Открыть сайт Clover<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </div>
+      <div class="featured-shot"><img src="clover-shot.png" width="1360" height="880" loading="lazy" alt="Окно Clover: сервер с текстовыми и голосовыми каналами"></div>
+    </a>
+
+    <div class="section-head" style="margin-top:56px">
+      <div class="grow">
+        <h2>Все приложения</h2>
+        <p>Нажмите на приложение, чтобы перейти на его сайт.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Платформа">
+        <button class="filter" type="button" data-filter="all" aria-pressed="true"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg>Все</button>
+        <button class="filter" type="button" data-filter="windows" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-windows"/></svg>Windows</button>
+        <button class="filter" type="button" data-filter="android" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Android</button>
+        <button class="filter" type="button" data-filter="ios" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-apple"/></svg>iPhone</button>
+      </div>
+    </div>
+
+    <div class="apps" id="app-list">
+      <a class="panel app reveal" href="/clover/" data-go data-platforms="windows android ios" data-repo="NiceKiller28/clover"
+         data-search="clover клевер торрент torrent друзья чат звонки серверы голос стрим экран мессенджер android iphone">
+        <div class="app-shot"><img src="clover-shot.png" width="1360" height="880" loading="lazy" alt="Окно Clover"></div>
+        <div class="app-body">
+          <div class="app-head">
+            <span class="clover-tile"><svg class="logo" aria-hidden="true"><use href="#clover"/></svg></span>
+            <span class="app-name"><b>Clover</b><small>Торрент-клиент · общение</small></span>
+          </div>
+          <p>Торренты, чат с друзьями, звонки, показ экрана и серверы с текстовыми и голосовыми каналами. Без регистрации и рекламы.</p>
+          <div class="tags">
+            <span class="tag"><svg class="i" aria-hidden="true"><use href="#i-windows"/></svg>Windows</span>
+            <span class="tag"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Android</span>
+            <span class="tag"><svg class="i" aria-hidden="true"><use href="#i-apple"/></svg>iPhone</span>
+            <span class="tag"><svg class="i" aria-hidden="true"><use href="#i-people"/></svg>Друзья и серверы</span>
+          </div>
+          <div class="app-foot">
+            <span class="app-meta"><b>Версия <span data-ver>2.6.1 beta</span></b>Бесплатно · <span data-size>79 МБ</span></span>
+            <span class="btn">Открыть<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="panel app reveal d1" href="/clover-plotter/" data-go data-platforms="windows" data-repo="NiceKiller28/clover-plotter"
+         data-search="clover plotter плоттер 3d принтер ручка перо почерк прописи письмо формулы bambu ender g-code">
+        <div class="app-shot"><img src="plotter-shot.png" width="1440" height="900" loading="lazy" alt="Окно Clover Plotter"></div>
+        <div class="app-body">
+          <div class="app-head">
+            <svg class="app-icon" aria-hidden="true"><use href="#plotter-icon"/></svg>
+            <span class="app-name"><b>Clover Plotter</b><small>Рукописный плоттер · 3D-печать</small></span>
+          </div>
+          <p>Превращает 3D-принтер в плоттер: ручка вместо сопла пишет текст почерком, как от руки — с формулами, таблицами и рисунками.</p>
+          <div class="tags">
+            <span class="tag"><svg class="i" aria-hidden="true"><use href="#i-windows"/></svg>Windows</span>
+            <span class="tag"><svg class="i" aria-hidden="true"><use href="#i-printer"/></svg>Bambu Lab, Creality и др.</span>
+          </div>
+          <div class="app-foot">
+            <span class="app-meta"><b>Версия <span data-ver>1.2.1</span></b>Бесплатно · <span data-size>79 МБ</span></span>
+            <span class="btn">Открыть<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <div class="soon-card reveal d2" id="soon" data-platforms="windows android ios" data-search="">
+        <span class="plus">+</span>
+        <b>Скоро новые приложения</b>
+        <span>Семья Clover растёт — новые программы появятся здесь первыми.</span>
+      </div>
+    </div>
+    <p class="empty" id="empty">Ничего не нашлось. Попробуйте другое слово или платформу.</p>
+  </section>
+
+  <section class="section" id="about">
+    <div class="section-head">
+      <div class="grow">
+        <h2>О Clover Store</h2>
+        <p>Витрина приложений семьи Clover. Здесь нет своей корзины и оплаты — каждое приложение скачивается с собственного сайта.</p>
+      </div>
+    </div>
+    <div class="about">
+      <div class="panel reveal"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-gift"/></svg></span><h3>Бесплатно</h3><p>Все приложения — без рекламы, подписок и регистрации.</p></div>
+      <div class="panel reveal d1"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-refresh"/></svg></span><h3>Всегда свежие версии</h3><p>Номер версии и размер в карточках берутся из выпусков на GitHub — сразу, как вышло обновление.</p></div>
+      <div class="panel reveal d2"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-palette"/></svg></span><h3>Один стиль</h3><p>Тёмная тема, мятный акцент и клевер — приложения семьи выглядят и ведут себя одинаково.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="row">
+      <a class="brand" href="#top" aria-label="Clover Store — наверх">
+        <svg class="app-icon" aria-hidden="true"><use href="#store-icon"/></svg>
+        <span class="brand-text"><b>Clover Store</b></span>
+      </a>
+      <span>Приложения: <a href="/clover/" data-go>Clover</a> · <a href="/clover-plotter/" data-go>Clover Plotter</a></span>
+      <span>Автор — <a href="https://github.com/NiceKiller28">NiceKiller28</a> на GitHub.</span>
+    </div>
+  </footer>
+</main>
+
+<script>
+  /* Версия и размер каждого приложения — из его последнего выпуска на GitHub. */
+  (function () {
+    if (!window.fetch) return;
+    document.querySelectorAll('[data-repo]').forEach(function (card) {
+      fetch('https://api.github.com/repos/' + card.dataset.repo + '/releases/latest', { headers: { Accept: 'application/vnd.github+json' } })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (release) {
+          if (!release || release.draft || release.prerelease) return;
+          var tag = String(release.tag_name || '').replace(/^v/i, '');
+          if (!/^\d+(\.\d+){1,3}(-[0-9A-Za-z.]+)?$/.test(tag)) return;
+          card.querySelectorAll('[data-ver]').forEach(function (el) { el.textContent = tag.replace('-', ' '); });
+          var exe = (release.assets || []).filter(function (a) { return /\.exe$/i.test(a.name); })
+            .sort(function (a, b) { return /setup/i.test(b.name) - /setup/i.test(a.name); })[0];
+          if (exe) card.querySelectorAll('[data-size]').forEach(function (el) { el.textContent = Math.round(exe.size / 1048576) + ' МБ'; });
+        })
+        .catch(function () { });
+    });
+  })();
+
+  /* Переход на сайт приложения: страница мягко гаснет и открывается выбранный сайт. Ctrl/⌘/средняя кнопка — как обычно. */
+  (function () {
+    document.querySelectorAll('a[data-go]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        if (e.defaultPrevented || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+        if (document.documentElement.classList.contains('calm')) return;
+        e.preventDefault();
+        document.body.classList.add('leaving');
+        setTimeout(function () { location.href = a.href; }, 220);
+      });
+    });
+    // Возврат кнопкой «Назад»: страница из кэша не должна остаться погасшей.
+    window.addEventListener('pageshow', function () { document.body.classList.remove('leaving'); });
+  })();
+
+  /* Поиск и фильтр по платформе. */
+  (function () {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('#app-list > [data-platforms]'));
+    var input = document.getElementById('search'), empty = document.getElementById('empty');
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('.filter'));
+    var platform = 'all';
+    function apply() {
+      var q = (input.value || '').trim().toLowerCase(), shown = 0;
+      cards.forEach(function (c) {
+        var isSoon = c.id === 'soon';
+        var okPlatform = platform === 'all' || (' ' + c.dataset.platforms + ' ').indexOf(' ' + platform + ' ') >= 0;
+        var okText = !q || (c.dataset.search + ' ' + c.textContent).toLowerCase().indexOf(q) >= 0;
+        var show = isSoon ? !q : okPlatform && okText;
+        c.hidden = !show;
+        if (show && !isSoon) shown++;
+      });
+      empty.classList.toggle('show', shown === 0);
+    }
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () {
+        platform = b.dataset.filter;
+        buttons.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        apply();
+      });
+    });
+    input.addEventListener('input', function () {
+      apply();
+      if (input.value && location.hash !== '#apps') document.getElementById('apps').scrollIntoView({ behavior: document.documentElement.classList.contains('calm') ? 'auto' : 'smooth' });
+    });
+    document.getElementById('app-count').textContent = cards.filter(function (c) { return c.id !== 'soon'; }).length;
+  })();
+</script>
+<script>
+  /* Боковая панель: подсветка раздела и шторка на телефоне. */
+  (function () {
+    var nav = document.getElementById('nav'), highlight = nav.querySelector('.nav-highlight');
+    var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+    var root = document.documentElement, menu = document.getElementById('menu-btn');
+    function activate(id) {
+      links.forEach(function (a) {
+        var on = a.dataset.section === id;
+        a.setAttribute('aria-current', on ? 'true' : 'false');
+        if (on) highlight.style.transform = 'translateY(' + a.offsetTop + 'px)';
+      });
+    }
+    activate('top');
+    if ('IntersectionObserver' in window) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) activate(e.target.id); });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      links.forEach(function (a) { var s = document.getElementById(a.dataset.section); if (s) spy.observe(s); });
+    }
+    function setMenu(open) {
+      root.classList.toggle('nav-open', open);
+      menu.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menu.setAttribute('aria-label', open ? 'Закрыть меню' : 'Меню');
+    }
+    menu.addEventListener('click', function () { setMenu(!root.classList.contains('nav-open')); });
+    document.getElementById('backdrop').addEventListener('click', function () { setMenu(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+    document.getElementById('sidebar').addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+  })();
+</script>
+<script>
+  (function () {
+    var items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { Array.prototype.forEach.call(items, function (el) { el.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+    Array.prototype.forEach.call(items, function (el) { io.observe(el); });
+  })();
+  document.addEventListener('pointerdown', function (e) {
+    var b = e.target.closest && e.target.closest('.btn');
+    if (!b || document.documentElement.classList.contains('calm')) return;
+    var r = b.getBoundingClientRect(), size = Math.max(r.width, r.height) * 2.2, dot = document.createElement('span');
+    dot.className = 'ripple';
+    dot.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + (e.clientX - r.left - size / 2) + 'px;top:' + (e.clientY - r.top - size / 2) + 'px';
+    b.appendChild(dot);
+    setTimeout(function () { dot.remove(); }, 600);
+  });
+  (function () {
+    var root = document.documentElement, toggle = document.getElementById('calm-toggle');
+    function sync() { toggle.setAttribute('aria-pressed', root.classList.contains('calm') ? 'false' : 'true'); }
+    toggle.addEventListener('click', function () {
+      root.classList.toggle('calm');
+      try { localStorage.setItem('clover-site-calm', root.classList.contains('calm') ? '1' : '0'); } catch (e) { }
+      if (!root.classList.contains('calm')) Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function (el) { el.classList.add('in'); });
+      sync();
+    });
+    sync();
+  })();
+</script>
+</body>
+</html>

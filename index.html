@@ -311,21 +311,67 @@
         <circle r="4.5" style="fill:var(--bg)"/>
       </g>
     </symbol>
-<symbol id="plotter-icon" viewBox="0 0 256 256">
+<symbol id="plotter-icon" viewBox="0 0 1024 1024">
 <defs>
-<linearGradient id="pi-tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#223A2B"/><stop offset="1" stop-color="#0C1611"/></linearGradient>
-<linearGradient id="pi-leaf" gradientUnits="userSpaceOnUse" x1="-40" y1="-70" x2="40" y2="70"><stop offset="0" stop-color="#B6F19D"/><stop offset="1" stop-color="#93D578"/></linearGradient>
-<linearGradient id="pi-nib" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3FBEE"/><stop offset="1" stop-color="#B2EF98"/></linearGradient>
+  <clipPath id="pgs-clip"><path d="M992 512 L991.6 673.2 L990.4 724.6 L988.3 761.7 L985.4 791.5 L981.6 816.8 L977 838.9 L971.6 858.4 L965.2 875.8 L957.8 891.4 L949.6 905.6 L940.2 918.3 L929.9 929.9 L918.3 940.2 L905.6 949.6 L891.4 957.8 L875.8 965.2 L858.4 971.6 L838.9 977 L816.8 981.6 L791.5 985.4 L761.7 988.3 L724.6 990.4 L673.2 991.6 L512 992 L350.8 991.6 L299.4 990.4 L262.3 988.3 L232.5 985.4 L207.2 981.6 L185.1 977 L165.6 971.6 L148.2 965.2 L132.6 957.8 L118.4 949.6 L105.7 940.2 L94.1 929.9 L83.8 918.3 L74.4 905.6 L66.2 891.4 L58.8 875.8 L52.4 858.4 L47 838.9 L42.4 816.8 L38.6 791.5 L35.7 761.7 L33.6 724.6 L32.4 673.2 L32 512 L32.4 350.8 L33.6 299.4 L35.7 262.3 L38.6 232.5 L42.4 207.2 L47 185.1 L52.4 165.6 L58.8 148.2 L66.2 132.6 L74.4 118.4 L83.8 105.7 L94.1 94.1 L105.7 83.8 L118.4 74.4 L132.6 66.2 L148.2 58.8 L165.6 52.4 L185.1 47 L207.2 42.4 L232.5 38.6 L262.3 35.7 L299.4 33.6 L350.8 32.4 L512 32 L673.2 32.4 L724.6 33.6 L761.7 35.7 L791.5 38.6 L816.8 42.4 L838.9 47 L858.4 52.4 L875.8 58.8 L891.4 66.2 L905.6 74.4 L918.3 83.8 L929.9 94.1 L940.2 105.7 L949.6 118.4 L957.8 132.6 L965.2 148.2 L971.6 165.6 L977 185.1 L981.6 207.2 L985.4 232.5 L988.3 262.3 L990.4 299.4 L991.6 350.8Z"/></clipPath>
+  <linearGradient id="pgs-bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#DCE8FB"/><stop offset="1" stop-color="#A9C6F0"/>
+  </linearGradient>
+  <radialGradient id="pgs-glow1" cx=".38" cy=".34" r=".55"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".75"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+  <radialGradient id="pgs-glow2" cx=".82" cy=".86" r=".5"><stop offset="0" stop-color="#7FB6FF" stop-opacity=".55"/><stop offset="1" stop-color="#7FB6FF" stop-opacity="0"/></radialGradient>
+  <linearGradient id="pgs-sheet" x1="0" y1="0" x2=".6" y2="1">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.6"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity="0.3"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.2"/>
+  </linearGradient>
+  <linearGradient id="pgs-rim" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#7FA6D9" stop-opacity=".95"/><stop offset=".45" stop-color="#7FA6D9" stop-opacity=".25"/><stop offset="1" stop-color="#7FA6D9" stop-opacity=".55"/>
+  </linearGradient>
+  <linearGradient id="pgs-nib" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity=".95"/><stop offset=".45" stop-color="#BFD9FF" stop-opacity=".85"/><stop offset="1" stop-color="#4F97F5" stop-opacity=".75"/>
+  </linearGradient>
+  <linearGradient id="pgs-collar" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#6EA8F5" stop-opacity=".9"/><stop offset=".5" stop-color="#D6E7FF" stop-opacity=".8"/><stop offset="1" stop-color="#4F8DE6" stop-opacity=".9"/>
+  </linearGradient>
+  <linearGradient id="pgs-edge" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity=".6"/><stop offset=".35" stop-color="#FFFFFF" stop-opacity=".14"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".06"/>
+  </linearGradient>
+  <linearGradient id="pgs-sheen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity=".24"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="pgs-blur-xl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="60"/></filter>
+  <filter id="pgs-shadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="22"/></filter>
+  <filter id="pgs-ink-glow" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+  <filter id="pgs-frost" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="26"/></filter>
 </defs>
-<rect x="10" y="10" width="236" height="236" rx="58" fill="url(#pi-tile)" stroke="#A4ED86" stroke-opacity=".37" stroke-width="3"/>
-<path d="M54 214C74 198 88 228 108 212C128 196 149.29 224.86 177.29 211.86" fill="none" stroke="#A4ED86" stroke-opacity=".6" stroke-width="5.5" stroke-linecap="round"/>
-<path d="M120 100C123 130 129 154 145.5 172" fill="none" stroke="#80B868" stroke-width="11.25" stroke-linecap="round"/>
-<path d="M134.44 182.14L156.56 161.86C168.94 174.26 175.23 192.23 179.29 208.86C163.07 203.38 145.72 195.54 134.44 182.14Z" fill="url(#pi-nib)"/>
-<path d="M156.62 160.45L133.03 182.07" stroke="#5A8249" stroke-width="8" stroke-linecap="round"/>
-<path d="M159.69 187.48L177.26 206.65" stroke="#0F1B15" stroke-width="3" stroke-linecap="round"/>
-<circle cx="159.01" cy="186.74" r="4.2" fill="#0F1B15"/>
-<g transform="translate(120 100) rotate(0)"><g fill="url(#pi-leaf)"><g transform="rotate(45)"><circle cx="-13.48" cy="-40.5" r="21.75"/><circle cx="13.48" cy="-40.5" r="21.75"/><path d="M0 -3L-33.71 -32.23H33.71Z"/></g><g transform="rotate(135)"><circle cx="-13.48" cy="-40.5" r="21.75"/><circle cx="13.48" cy="-40.5" r="21.75"/><path d="M0 -3L-33.71 -32.23H33.71Z"/></g><g transform="rotate(225)"><circle cx="-13.48" cy="-40.5" r="21.75"/><circle cx="13.48" cy="-40.5" r="21.75"/><path d="M0 -3L-33.71 -32.23H33.71Z"/></g><g transform="rotate(315)"><circle cx="-13.48" cy="-40.5" r="21.75"/><circle cx="13.48" cy="-40.5" r="21.75"/><path d="M0 -3L-33.71 -32.23H33.71Z"/></g></g><circle r="6" fill="#0F1B15"/></g>
-</symbol>
+<g clip-path="url(#pgs-clip)">
+<rect width="1024" height="1024" fill="url(#pgs-bg)"/>
+<circle cx="380" cy="330" r="420" fill="url(#pgs-glow1)" filter="url(#pgs-blur-xl)"/>
+<circle cx="860" cy="880" r="380" fill="url(#pgs-glow2)" filter="url(#pgs-blur-xl)"/>
+<rect x="213" y="260" width="470" height="600" rx="54" fill="#000" opacity=".34" filter="url(#pgs-shadow)" transform="translate(10 34) rotate(-7 448 560)"/>
+<g transform="rotate(-7 448 560)">
+<clipPath id="pgs-paper"><rect x="213" y="260" width="470" height="600" rx="54"/></clipPath>
+<g clip-path="url(#pgs-paper)"><circle cx="380" cy="330" r="300" fill="#FFFFFF" opacity=".35" filter="url(#pgs-frost)"/></g>
+<rect x="213" y="260" width="470" height="600" rx="54" fill="url(#pgs-sheet)"/>
+<line x1="248" x2="648" y1="434" y2="434" stroke="#7FA6D9" stroke-opacity=".18" stroke-width="3"/>
+<line x1="248" x2="648" y1="559" y2="559" stroke="#7FA6D9" stroke-opacity=".18" stroke-width="3"/>
+<line x1="248" x2="648" y1="684" y2="684" stroke="#7FA6D9" stroke-opacity=".18" stroke-width="3"/>
+<rect x="213" y="260" width="470" height="600" rx="54" fill="none" stroke="url(#pgs-rim)" stroke-width="5"/>
+<path d="M267.6 426 C277.2 424 286.8 420 290 420 C307.9 420 329.7 376 315.6 376 C301.5 376 307.9 420 354 420 C371.9 420 393.7 325 379.6 325 C365.5 325 371.9 420 418 420 C435.9 420 457.7 376 443.6 376 C429.5 376 435.9 420 482 420 M267.6 551 C277.2 549 286.8 545 290 545 C307.9 545 329.7 501 315.6 501 C301.5 501 307.9 545 354 545 C371.9 545 393.7 450 379.6 450 C365.5 450 371.9 545 418 545 C435.9 545 457.7 501 443.6 501 C429.5 501 435.9 545 482 545 M267.6 676 C277.2 674 286.8 670 290 670 C307.9 670 329.7 626 315.6 626 C301.5 626 307.9 670 354 670 C371.9 670 393.7 575 379.6 575 C365.5 575 371.9 670 418 670 C435.9 670 457.7 626 443.6 626 C429.5 626 435.9 670 482 670 C499.9 670 521.7 626 507.6 626 C493.5 626 499.9 670 546 670" fill="none" stroke="#7FB6FF" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" opacity=".8" filter="url(#pgs-ink-glow)"/>
+<path d="M267.6 426 C277.2 424 286.8 420 290 420 C307.9 420 329.7 376 315.6 376 C301.5 376 307.9 420 354 420 C371.9 420 393.7 325 379.6 325 C365.5 325 371.9 420 418 420 C435.9 420 457.7 376 443.6 376 C429.5 376 435.9 420 482 420 M267.6 551 C277.2 549 286.8 545 290 545 C307.9 545 329.7 501 315.6 501 C301.5 501 307.9 545 354 545 C371.9 545 393.7 450 379.6 450 C365.5 450 371.9 545 418 545 C435.9 545 457.7 501 443.6 501 C429.5 501 435.9 545 482 545 M267.6 676 C277.2 674 286.8 670 290 670 C307.9 670 329.7 626 315.6 626 C301.5 626 307.9 670 354 670 C371.9 670 393.7 575 379.6 575 C365.5 575 371.9 670 418 670 C435.9 670 457.7 626 443.6 626 C429.5 626 435.9 670 482 670 C499.9 670 521.7 626 507.6 626 C493.5 626 499.9 670 546 670" fill="none" stroke="#0A6CDD" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g transform="translate(22 30)" opacity=".4" filter="url(#pgs-shadow)"><g transform="translate(564.7 661.2) rotate(-143.1)"><path d="M0 0 C17.1 48 107 100 117.7 180 C128.4 248 113.4 296 107 312 L89.9 400 L-89.9 400 L-107 312 C-113.4 296 -128.4 248 -117.7 180 C-107 100 -17.1 48 0 0Z" fill="#000"/><rect x="-98.4" y="392" width="196.9" height="88" rx="22" fill="#000"/></g></g>
+<g transform="translate(564.7 661.2) rotate(-143.1)">
+<rect x="-98.4" y="392" width="196.9" height="88" rx="22" fill="url(#pgs-collar)"/>
+<rect x="-98.4" y="392" width="196.9" height="88" rx="22" fill="none" stroke="#FFFFFF" stroke-opacity=".45" stroke-width="4"/>
+<path d="M0 0 C17.1 48 107 100 117.7 180 C128.4 248 113.4 296 107 312 L89.9 400 L-89.9 400 L-107 312 C-113.4 296 -128.4 248 -117.7 180 C-107 100 -17.1 48 0 0Z" fill="url(#pgs-nib)"/>
+<path d="M-21.4 64 C-89.9 112 -107 168 -107 240" fill="none" stroke="#FFFFFF" stroke-opacity=".85" stroke-width="10" stroke-linecap="round"/>
+<path d="M0 0 C17.1 48 107 100 117.7 180 C128.4 248 113.4 296 107 312 L89.9 400 L-89.9 400 L-107 312 C-113.4 296 -128.4 248 -117.7 180 C-107 100 -17.1 48 0 0Z" fill="none" stroke="#FFFFFF" stroke-opacity=".6" stroke-width="4"/>
+<path d="M0 26 L0 200" stroke="#0B3D8C" stroke-opacity=".75" stroke-width="9" stroke-linecap="round"/>
+<circle cx="0" cy="224" r="24" fill="#0B3D8C" fill-opacity=".72"/>
+<circle cx="0" cy="224" r="24" fill="none" stroke="#FFFFFF" stroke-opacity=".55" stroke-width="4"/>
+</g>
+<ellipse cx="512" cy="40" rx="560" ry="360" fill="url(#pgs-sheen)"/>
+</g>
+<path d="M992 512 L991.6 673.2 L990.4 724.6 L988.3 761.7 L985.4 791.5 L981.6 816.8 L977 838.9 L971.6 858.4 L965.2 875.8 L957.8 891.4 L949.6 905.6 L940.2 918.3 L929.9 929.9 L918.3 940.2 L905.6 949.6 L891.4 957.8 L875.8 965.2 L858.4 971.6 L838.9 977 L816.8 981.6 L791.5 985.4 L761.7 988.3 L724.6 990.4 L673.2 991.6 L512 992 L350.8 991.6 L299.4 990.4 L262.3 988.3 L232.5 985.4 L207.2 981.6 L185.1 977 L165.6 971.6 L148.2 965.2 L132.6 957.8 L118.4 949.6 L105.7 940.2 L94.1 929.9 L83.8 918.3 L74.4 905.6 L66.2 891.4 L58.8 875.8 L52.4 858.4 L47 838.9 L42.4 816.8 L38.6 791.5 L35.7 761.7 L33.6 724.6 L32.4 673.2 L32 512 L32.4 350.8 L33.6 299.4 L35.7 262.3 L38.6 232.5 L42.4 207.2 L47 185.1 L52.4 165.6 L58.8 148.2 L66.2 132.6 L74.4 118.4 L83.8 105.7 L94.1 94.1 L105.7 83.8 L118.4 74.4 L132.6 66.2 L148.2 58.8 L165.6 52.4 L185.1 47 L207.2 42.4 L232.5 38.6 L262.3 35.7 L299.4 33.6 L350.8 32.4 L512 32 L673.2 32.4 L724.6 33.6 L761.7 35.7 L791.5 38.6 L816.8 42.4 L838.9 47 L858.4 52.4 L875.8 58.8 L891.4 66.2 L905.6 74.4 L918.3 83.8 L929.9 94.1 L940.2 105.7 L949.6 118.4 L957.8 132.6 L965.2 148.2 L971.6 165.6 L977 185.1 L981.6 207.2 L985.4 232.5 L988.3 262.3 L990.4 299.4 L991.6 350.8Z" fill="none" stroke="url(#pgs-edge)" stroke-width="6"/></symbol>
 <symbol id="store-icon" viewBox="0 0 256 256">
 <defs>
 <linearGradient id="si-tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#223A2B"/><stop offset="1" stop-color="#0C1611"/></linearGradient>
@@ -460,7 +506,7 @@
             <span class="tag"><svg class="i" aria-hidden="true"><use href="#i-people"/></svg>Друзья и серверы</span>
           </div>
           <div class="app-foot">
-            <span class="app-meta"><b>Версия <span data-ver>2.6.1 beta</span></b>Бесплатно · <span data-size>79 МБ</span></span>
+            <span class="app-meta"><b>Версия <span data-ver>2.6.1 beta</span></b>Бесплатно · <span data-size>80 МБ</span></span>
             <span class="btn">Открыть<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
           </div>
         </div>
@@ -480,7 +526,7 @@
             <span class="tag"><svg class="i" aria-hidden="true"><use href="#i-printer"/></svg>Bambu Lab, Creality и др.</span>
           </div>
           <div class="app-foot">
-            <span class="app-meta"><b>Версия <span data-ver>1.2.1</span></b>Бесплатно · <span data-size>79 МБ</span></span>
+            <span class="app-meta"><b>Версия <span data-ver>1.2.1</span></b>Бесплатно · <span data-size>80 МБ</span></span>
             <span class="btn">Открыть<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
           </div>
         </div>
@@ -505,7 +551,7 @@
     <div class="about">
       <div class="panel reveal"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-gift"/></svg></span><h3>Бесплатно</h3><p>Все приложения — без рекламы, подписок и регистрации.</p></div>
       <div class="panel reveal d1"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-refresh"/></svg></span><h3>Всегда свежие версии</h3><p>Номер версии и размер в карточках берутся из выпусков на GitHub — сразу, как вышло обновление.</p></div>
-      <div class="panel reveal d2"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-palette"/></svg></span><h3>Один стиль</h3><p>Тёмная тема, мятный акцент и клевер — приложения семьи выглядят и ведут себя одинаково.</p></div>
+      <div class="panel reveal d2"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-palette"/></svg></span><h3>Один подход</h3><p>Крупные скругления, понятные подписи и плавные анимации — приложения семьи ведут себя одинаково. У Clover Plotter — стеклянные темы на выбор.</p></div>
     </div>
   </section>
 
